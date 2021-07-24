@@ -96,10 +96,12 @@ public class ContextLoaderListener extends ContextLoader implements ServletConte
 
 
 	/**
+	 * tomcat容器启动时，调用
 	 * Initialize the root web application context.
 	 */
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
+		// 加载spring容器
 		initWebApplicationContext(event.getServletContext());
 	}
 

@@ -50,6 +50,9 @@ public abstract class AbstractTransactionStatus implements TransactionStatus {
 
 	private boolean completed = false;
 
+	/**
+	 * 是否有回滚点
+	 */
 	@Nullable
 	private Object savepoint;
 

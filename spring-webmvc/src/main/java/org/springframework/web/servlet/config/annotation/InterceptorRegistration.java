@@ -42,6 +42,9 @@ public class InterceptorRegistration {
 
 	private final List<String> excludePatterns = new ArrayList<>();
 
+	/**
+	 * 拦截器的url
+	 */
 	@Nullable
 	private PathMatcher pathMatcher;
 

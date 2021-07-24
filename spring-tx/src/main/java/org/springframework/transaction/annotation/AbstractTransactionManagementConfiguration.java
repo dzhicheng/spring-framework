@@ -73,6 +73,7 @@ public abstract class AbstractTransactionManagementConfiguration implements Impo
 			throw new IllegalStateException("Only one TransactionManagementConfigurer may exist");
 		}
 		TransactionManagementConfigurer configurer = configurers.iterator().next();
+		// 通过创建TransactionManagementConfigurer子类，实现annotationDrivenTransactionManager方法，设置txManager
 		this.txManager = configurer.annotationDrivenTransactionManager();
 	}
 

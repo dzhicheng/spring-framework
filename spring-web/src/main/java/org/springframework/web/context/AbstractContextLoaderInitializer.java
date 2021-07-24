@@ -47,6 +47,7 @@ public abstract class AbstractContextLoaderInitializer implements WebApplication
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
+		// 对应web.xml标签ContextLoaderListener
 		registerContextLoaderListener(servletContext);
 	}
 
@@ -73,8 +74,7 @@ public abstract class AbstractContextLoaderInitializer implements WebApplication
 			ContextLoaderListener listener = new ContextLoaderListener(rootAppContext);
 			listener.setContextInitializers(getRootApplicationContextInitializers());
 			servletContext.addListener(listener);
-		}
-		else {
+		} else {
 			logger.debug("No ContextLoaderListener registered, as " +
 					"createRootApplicationContext() did not return an application context");
 		}

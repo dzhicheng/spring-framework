@@ -151,6 +151,7 @@ public abstract class TransactionSynchronizationManager {
 	 */
 	@Nullable
 	private static Object doGetResource(Object actualKey) {
+		// 连接池对象和连接对象的映射
 		Map<Object, Object> map = resources.get();
 		if (map == null) {
 			return null;
@@ -184,6 +185,7 @@ public abstract class TransactionSynchronizationManager {
 			map = new HashMap<>();
 			resources.set(map);
 		}
+		// actualKey连接池对象，value连接对象，map存入ThreadLocal
 		Object oldValue = map.put(actualKey, value);
 		// Transparently suppress a ResourceHolder that was marked as void...
 		if (oldValue instanceof ResourceHolder && ((ResourceHolder) oldValue).isVoid()) {

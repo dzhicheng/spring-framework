@@ -100,9 +100,11 @@ public abstract class AbstractDispatcherServletInitializer extends AbstractConte
 			值越小，servlet的优先级越高，就越先被加载
 		* */
 		registration.setLoadOnStartup(1);
+		// getServletMappings()：钩子方法，子类实现，获取DispatcherServlet的映射信息
 		registration.addMapping(getServletMappings());
 		registration.setAsyncSupported(isAsyncSupported());
 
+		// getServletFilters()：钩子方法，子类实现
 		Filter[] filters = getServletFilters();
 		if (!ObjectUtils.isEmpty(filters)) {
 			for (Filter filter : filters) {
@@ -139,6 +141,7 @@ public abstract class AbstractDispatcherServletInitializer extends AbstractConte
 	 * Previously, it insisted on returning a {@link DispatcherServlet} or subclass thereof.
 	 */
 	protected FrameworkServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
+		// 对应web.xml里面的org.springframework.web.servlet.DispatcherServlet
 		return new DispatcherServlet(servletAppContext);
 	}
 

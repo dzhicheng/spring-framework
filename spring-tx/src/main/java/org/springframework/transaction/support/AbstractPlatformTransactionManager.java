@@ -378,21 +378,21 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 				try {
 					boolean newSynchronization = (getTransactionSynchronization() != SYNCHRONIZATION_NEVER);
 					//创建事务状态对象，其实就是封装了事务对象的一些信息，记录事务状态的
+					// 为了判断当前事务是不是最新的
 					DefaultTransactionStatus status = newTransactionStatus(
 							definition, transaction, true, newSynchronization, debugEnabled, suspendedResources);
 
 					//开启事务,重点看看 DataSourceTransactionObject
 					doBegin(transaction, definition);
 
-					//开启事务后，改变事务状态
+					//开启事务后，改变事务状态，暂不看
 					prepareSynchronization(status, definition);
 					return status;
+				} catch (RuntimeException | Error ex) {
+					resume(null, suspendedResources);
+					throw ex;
+				}
 			}
-			catch (RuntimeException | Error ex) {
-				resume(null, suspendedResources);
-				throw ex;
-			}
-		}
 		else {
 			// Create "empty" transaction: no actual transaction, but potentially synchronization.
 			if (definition.getIsolationLevel() != TransactionDefinition.ISOLATION_DEFAULT && logger.isWarnEnabled()) {
@@ -612,13 +612,11 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 				doResumeSynchronization(suspendedSynchronizations);
 				throw ex;
 			}
-		}
-		else if (transaction != null) {
+		} else if (transaction != null) {
 			// Transaction active but no synchronization active.
 			Object suspendedResources = doSuspend(transaction);
 			return new SuspendedResourcesHolder(suspendedResources);
-		}
-		else {
+		} else {
 			// Neither transaction nor synchronization active.
 			return null;
 		}
@@ -1027,6 +1025,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 			TransactionSynchronizationManager.clear();
 		}
 		if (status.isNewTransaction()) {
+			// 子事务不会进来
 			doCleanupAfterCompletion(status.getTransaction());
 		}
 		//判断当前事务有没有挂起的连接

@@ -132,23 +132,24 @@ public class TransactionTemplate extends DefaultTransactionDefinition
 
 		if (this.transactionManager instanceof CallbackPreferringPlatformTransactionManager) {
 			return ((CallbackPreferringPlatformTransactionManager) this.transactionManager).execute(this, action);
-		}
-		else {
+		} else {
+			// 1.开启事务
 			TransactionStatus status = this.transactionManager.getTransaction(this);
 			T result;
 			try {
+				// 2.调用匿名方法(自己实现的)
 				result = action.doInTransaction(status);
-			}
-			catch (RuntimeException | Error ex) {
+			} catch (RuntimeException | Error ex) {
 				// Transactional code threw application exception -> rollback
+				// 回滚
 				rollbackOnException(status, ex);
 				throw ex;
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				// Transactional code threw unexpected exception -> rollback
 				rollbackOnException(status, ex);
 				throw new UndeclaredThrowableException(ex, "TransactionCallback threw undeclared checked exception");
 			}
+			// 3.事务提交
 			this.transactionManager.commit(status);
 			return result;
 		}
@@ -166,13 +167,11 @@ public class TransactionTemplate extends DefaultTransactionDefinition
 		logger.debug("Initiating transaction rollback on application exception", ex);
 		try {
 			this.transactionManager.rollback(status);
-		}
-		catch (TransactionSystemException ex2) {
+		} catch (TransactionSystemException ex2) {
 			logger.error("Application exception overridden by rollback exception", ex);
 			ex2.initApplicationException(ex);
 			throw ex2;
-		}
-		catch (RuntimeException | Error ex2) {
+		} catch (RuntimeException | Error ex2) {
 			logger.error("Application exception overridden by rollback exception", ex);
 			throw ex2;
 		}

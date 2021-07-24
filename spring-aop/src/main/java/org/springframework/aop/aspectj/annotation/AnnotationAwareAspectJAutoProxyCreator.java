@@ -86,6 +86,12 @@ public class AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorA
 	}
 
 
+	/**
+	 * 找合适的切面
+	 * 	1.从spring中找所有切面
+	 * 	2.找到和当前bean匹配的切面
+	 * @return
+	 */
 	@Override
 	protected List<Advisor> findCandidateAdvisors() {
 		//可以不看

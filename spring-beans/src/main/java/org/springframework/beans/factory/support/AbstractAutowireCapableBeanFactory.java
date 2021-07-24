@@ -419,7 +419,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		* 着重看几个
 		* 1、ApplicationContextAwareProcessor  对某个Aware接口方法的调用
 		* 2、InitDestroyAnnotationBeanPostProcessor  @PostConstruct注解方法的调用
-		*
 		* 3、ImportAwareBeanPostProcessor  对ImportAware类型实例setImportMetadata调用
 		* 这个对理解springboot有很大帮助。 这里暂时不需要深入看
 		* */
@@ -439,7 +438,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		Object result = existingBean;
 		for (BeanPostProcessor processor : getBeanPostProcessors()) {
-			// （*****重点看）
+			// （*****重点看*****）
 			Object current = processor.postProcessAfterInitialization(result, beanName);
 			if (current == null) {
 				return result;
@@ -601,7 +600,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			//ioc di，依赖注入的核心方法，该方法必须看，重要程度：5
 			populateBean(beanName, mbd, instanceWrapper);
 
-			//bean 实例化+ioc依赖注入完以后的调用(AOP入口)，非常重要，重要程度：5
+			// bean 实例化+ioc依赖注入完以后的调用()，非常重要，重要程度：5
+			//******AOP入口******
 			exposedObject = initializeBean(beanName, exposedObject, mbd);
 		} catch (Throwable ex) {
 			if (ex instanceof BeanCreationException && beanName.equals(((BeanCreationException) ex).getBeanName())) {

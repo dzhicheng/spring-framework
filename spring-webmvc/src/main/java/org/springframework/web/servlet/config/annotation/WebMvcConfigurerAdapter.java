@@ -37,6 +37,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
  * possible by a Java 8 baseline) and can be implemented directly without the
  * need for this adapter
  */
+// 废弃注解
 @Deprecated
 public abstract class WebMvcConfigurerAdapter implements WebMvcConfigurer {
 

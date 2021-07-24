@@ -70,7 +70,7 @@ public class ProxyTransactionManagementConfiguration extends AbstractTransaction
 	public TransactionInterceptor transactionInterceptor() {
 		TransactionInterceptor interceptor = new TransactionInterceptor();
 		interceptor.setTransactionAttributeSource(transactionAttributeSource());
-		//事务管理器要跟数据源挂钩，所以需要自己定义
+		//事务管理器要跟数据源挂钩，所以需要自己定义，查看TransactionManagementConfigurerBean类
 		if (this.txManager != null) {
 			interceptor.setTransactionManager(this.txManager);
 		}

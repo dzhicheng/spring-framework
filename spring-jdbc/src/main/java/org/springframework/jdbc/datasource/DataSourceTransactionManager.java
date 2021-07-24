@@ -232,6 +232,11 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 		return obtainDataSource();
 	}
 
+	/**
+	 * 1.标识当前请求是否有事务，事务是不是最新的
+	 * 2.包装了连接对象在事务对象中
+	 * @return
+	 */
 	@Override
 	protected Object doGetTransaction() {
 		//管理connection对象，创建回滚点，按照回滚点回滚，释放回滚点
@@ -254,6 +259,12 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 	}
 
 	/**
+	 * 1、从连接池获取连接对象
+	 * 2、连接对象封装到ConnectionHolder
+	 * 3、将ConnectionHolder封装到事务对象txObject
+	 * 4、获取隔离级别，set到txObject中
+	 * 5、关闭自动提交
+	 * 6、设置属性，比如事务只读
 	 * This implementation sets the isolation level but ignores the timeout.
 	 */
 	@Override
@@ -310,9 +321,7 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 				//如果是新创建的事务，则建立当前线程和数据库连接的关系
 				TransactionSynchronizationManager.bindResource(obtainDataSource(), txObject.getConnectionHolder());
 			}
-		}
-
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			if (txObject.isNewConnectionHolder()) {
 				DataSourceUtils.releaseConnection(con, obtainDataSource());
 				txObject.setConnectionHolder(null, false);

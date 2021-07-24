@@ -39,7 +39,9 @@ public class ProxyConfig implements Serializable {
 	private boolean optimize = false;
 
 	boolean opaque = false;
-
+	/**
+	 * 是否要暴露代理对象
+	 */
 	boolean exposeProxy = false;
 
 	private boolean frozen = false;

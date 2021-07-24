@@ -241,8 +241,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 		Class<?> beanType = null;
 		try {
 			beanType = obtainApplicationContext().getType(beanName);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			// An unresolvable bean type, probably from a lazy bean - let's ignore it.
 			if (logger.isTraceEnabled()) {
 				logger.trace("Could not resolve type for bean '" + beanName + "'", ex);
@@ -284,6 +283,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 			methods.forEach((method, mapping) -> {
 				Method invocableMethod = AopUtils.selectInvocableMethod(method, userType);
 				//建立uri和方法的各种映射关系，反正一条，根据uri要能够找到method对象
+				// 将RequestMappingInfo和HandlerMethod对象映射关系，存入mappingLookup
 				registerHandlerMethod(handler, invocableMethod, mapping);
 			});
 		}
@@ -599,7 +599,7 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 				HandlerMethod handlerMethod = createHandlerMethod(handler, method);
 				//检验是否唯一
 				assertUniqueMethodMapping(handlerMethod, mapping);
-				//建立uri对象和handlerMethod的映射关系
+				//建立uri(RequestMappingInfo)对象和handlerMethod的映射关系
 				this.mappingLookup.put(mapping, handlerMethod);
 
 				List<String> directUrls = getDirectUrls(mapping);

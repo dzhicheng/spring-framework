@@ -321,8 +321,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		if (StringUtils.hasLength(beanName)) {
 			return (FactoryBean.class.isAssignableFrom(beanClass) ?
 					BeanFactory.FACTORY_BEAN_PREFIX + beanName : beanName);
-		}
-		else {
+		} else {
 			return beanClass;
 		}
 	}
@@ -346,13 +345,14 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 			return bean;
 		}
 
-		//创建当前bean的代理，如果这个bean有advice的话，重点看，重要程度5
+
 		/**
 		 * 1.收集项目中含有@Aspect注解的类
 		 * 2.循环没有@Pointcut注解的方法，同时找含有@Before、@After注解的方法，把注解里的信息封装成对象,Expression对象
 		 * 	生成Pointcout对象，再把表达式set到Pointcut中
 		 */
-		// Create proxy if we have advice.
+		//创建当前bean的代理，如果这个bean有advice的话，重点看，重要程度5
+		// advice数组，Create proxy if we have advice.
 		Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null);
 		//如果有切面，则生成该bean的代理
 		if (specificInterceptors != DO_NOT_PROXY) {
@@ -461,6 +461,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		ProxyFactory proxyFactory = new ProxyFactory();
 		proxyFactory.copyFrom(this);
 
+		// 判断代理使用cglib还是jdkProxy
 		if (!proxyFactory.isProxyTargetClass()) {
 			if (shouldProxyTargetClass(beanClass, beanName)) {
 				//proxyTargetClass 是否对类进行代理，而不是对接口进行代理，设置为true时，使用CGLib代理。
@@ -471,9 +472,10 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 			}
 		}
 
-		//把advice类型的增强包装成advisor切面
+		//把advice类型的增强包装成advisor切面(*****重点看*****）
 		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
 		proxyFactory.addAdvisors(advisors);
+		// targetSource封装了被代理对象
 		proxyFactory.setTargetSource(targetSource);
 		customizeProxyFactory(proxyFactory);
 
@@ -559,7 +561,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	 * Resolves the specified interceptor names to Advisor objects.
 	 * @see #setInterceptorNames
 	 */
-	private Advisor[] resolveInterceptorNames() {
+	private Advisor[]  resolveInterceptorNames() {
 		BeanFactory bf = this.beanFactory;
 		ConfigurableBeanFactory cbf = (bf instanceof ConfigurableBeanFactory ? (ConfigurableBeanFactory) bf : null);
 		List<Advisor> advisors = new ArrayList<>();

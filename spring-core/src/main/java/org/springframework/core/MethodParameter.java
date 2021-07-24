@@ -62,7 +62,9 @@ public class MethodParameter {
 	private static final Annotation[] EMPTY_ANNOTATION_ARRAY = new Annotation[0];
 
 	private final Executable executable;
-
+	/**
+	 * 参数索引
+	 */
 	private final int parameterIndex;
 
 	@Nullable
@@ -76,13 +78,17 @@ public class MethodParameter {
 
 	@Nullable
 	private volatile Class<?> containingClass;
-
+	/**
+	 * 参数类型
+	 */
 	@Nullable
 	private volatile Class<?> parameterType;
 
 	@Nullable
 	private volatile Type genericParameterType;
-
+	/**
+	 * 参数的注解数组
+	 */
 	@Nullable
 	private volatile Annotation[] parameterAnnotations;
 

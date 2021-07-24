@@ -137,6 +137,7 @@ public class HandlerExecutionChain {
 					triggerAfterCompletion(request, response, null);
 					return false;
 				}
+				// 拦截器的索引
 				this.interceptorIndex = i;
 			}
 		}
@@ -151,6 +152,7 @@ public class HandlerExecutionChain {
 
 		HandlerInterceptor[] interceptors = getInterceptors();
 		if (!ObjectUtils.isEmpty(interceptors)) {
+			// 倒叙循环
 			for (int i = interceptors.length - 1; i >= 0; i--) {
 				HandlerInterceptor interceptor = interceptors[i];
 				interceptor.postHandle(request, response, this.handler, mv);
