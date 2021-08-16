@@ -1017,6 +1017,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 			ModelFactory modelFactory, NativeWebRequest webRequest) throws Exception {
 
 		modelFactory.updateModel(webRequest, mavContainer);
+		// 当方法被@ResponseBody修饰，不生成ModelAndView对象，直接返回
 		if (mavContainer.isRequestHandled()) {
 			return null;
 		}

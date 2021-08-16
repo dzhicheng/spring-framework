@@ -86,8 +86,7 @@ public class ViewNameMethodReturnValueHandler implements HandlerMethodReturnValu
 			if (isRedirectViewName(viewName)) {
 				mavContainer.setRedirectModelScenario(true);
 			}
-		}
-		else if (returnValue != null){
+		} else if (returnValue != null){
 			// should not happen
 			throw new UnsupportedOperationException("Unexpected return type: " +
 					returnType.getParameterType().getName() + " in method: " + returnType.getMethod());

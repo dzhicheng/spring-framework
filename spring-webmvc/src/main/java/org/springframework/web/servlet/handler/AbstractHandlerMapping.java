@@ -534,8 +534,7 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 		if (CorsUtils.isPreFlightRequest(request)) {
 			HandlerInterceptor[] interceptors = chain.getInterceptors();
 			chain = new HandlerExecutionChain(new PreFlightHandler(config), interceptors);
-		}
-		else {
+		} else {
 			chain.addInterceptor(new CorsInterceptor(config));
 		}
 		return chain;
@@ -566,6 +565,9 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 
 	private class CorsInterceptor extends HandlerInterceptorAdapter implements CorsConfigurationSource {
 
+		/**
+		 * 跨域注解对象
+		 */
 		@Nullable
 		private final CorsConfiguration config;
 
@@ -573,6 +575,14 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 			this.config = config;
 		}
 
+		/**
+		 * 前置过滤器调用
+		 * @param request
+		 * @param response
+		 * @param handler
+		 * @return
+		 * @throws Exception
+		 */
 		@Override
 		public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 				throws Exception {

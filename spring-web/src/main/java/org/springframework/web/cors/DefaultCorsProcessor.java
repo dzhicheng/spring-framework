@@ -169,6 +169,7 @@ public class DefaultCorsProcessor implements CorsProcessor {
 			responseHeaders.setAccessControlMaxAge(config.getMaxAge());
 		}
 
+		// 真正改变response对象的值
 		response.flush();
 		return true;
 	}

@@ -406,13 +406,11 @@ public class ExceptionHandlerExceptionResolver extends AbstractHandlerMethodExce
 			if (cause != null) {
 				// Expose cause as provided argument as well
 				exceptionHandlerMethod.invokeAndHandle(webRequest, mavContainer, exception, cause, handlerMethod);
-			}
-			else {
+			} else {
 				// Otherwise, just the given exception as-is
 				exceptionHandlerMethod.invokeAndHandle(webRequest, mavContainer, exception, handlerMethod);
 			}
-		}
-		catch (Throwable invocationEx) {
+		} catch (Throwable invocationEx) {
 			// Any other than the original exception is unintended here,
 			// probably an accident (e.g. failed assertion or the like).
 			if (invocationEx != exception && logger.isWarnEnabled()) {
@@ -477,7 +475,7 @@ public class ExceptionHandlerExceptionResolver extends AbstractHandlerMethodExce
 			}
 		}
 
-		//在这里获取到了有@ControllerAdvice("com.xiangxue.jack")注解的类
+		//在这里获取到了有@ControllerAdvice("com.dongzhic")注解的类
 		for (Map.Entry<ControllerAdviceBean, ExceptionHandlerMethodResolver> entry : this.exceptionHandlerAdviceCache.entrySet()) {
 			ControllerAdviceBean advice = entry.getKey();
 			if (advice.isApplicableToBeanType(handlerType)) {

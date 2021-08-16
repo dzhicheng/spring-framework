@@ -51,6 +51,9 @@ public class ModelAndViewContainer {
 
 	private boolean ignoreDefaultModelOnRedirect = false;
 
+	/**
+	 * 值不为空时，返回视图，值为视图路径
+	 */
 	@Nullable
 	private Object view;
 

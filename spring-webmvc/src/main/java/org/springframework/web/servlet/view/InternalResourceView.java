@@ -162,13 +162,12 @@ public class InternalResourceView extends AbstractUrlBasedView {
 				logger.debug("Including [" + getUrl() + "]");
 			}
 			rd.include(request, response);
-		}
-
-		else {
+		} else {
 			// Note: The forwarded resource is supposed to determine the content type itself.
 			if (logger.isDebugEnabled()) {
 				logger.debug("Forwarding to [" + getUrl() + "]");
 			}
+			// 视图相应
 			rd.forward(request, response);
 		}
 	}

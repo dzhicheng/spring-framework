@@ -1112,8 +1112,7 @@ public class DispatcherServlet extends FrameworkServlet {
 			if (exception instanceof ModelAndViewDefiningException) {
 				logger.debug("ModelAndViewDefiningException encountered", exception);
 				mv = ((ModelAndViewDefiningException) exception).getModelAndView();
-			}
-			else {
+			} else {
 				Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);
 				mv = processHandlerException(request, response, handler, exception);
 				errorView = (mv != null);
@@ -1127,8 +1126,7 @@ public class DispatcherServlet extends FrameworkServlet {
 			if (errorView) {
 				WebUtils.clearErrorRequestAttributes(request);
 			}
-		}
-		else {
+		} else {
 			if (logger.isTraceEnabled()) {
 				logger.trace("No view rendering, null ModelAndView returned.");
 			}
@@ -1139,7 +1137,7 @@ public class DispatcherServlet extends FrameworkServlet {
 			return;
 		}
 
-		//后置过滤器
+		//后置过滤器，资源释放
 		if (mappedHandler != null) {
 			mappedHandler.triggerAfterCompletion(request, response, null);
 		}
@@ -1359,13 +1357,13 @@ public class DispatcherServlet extends FrameworkServlet {
 		String viewName = mv.getViewName();
 		if (viewName != null) {
 			// We need to resolve the view name.
+			// InternalResourceView对象
 			view = resolveViewName(viewName, mv.getModelInternal(), locale, request);
 			if (view == null) {
 				throw new ServletException("Could not resolve view with name '" + mv.getViewName() +
 						"' in servlet with name '" + getServletName() + "'");
 			}
-		}
-		else {
+		} else {
 			// No need to lookup: the ModelAndView object contains the actual View object.
 			view = mv.getView();
 			if (view == null) {

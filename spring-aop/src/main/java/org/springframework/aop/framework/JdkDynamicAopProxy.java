@@ -171,16 +171,13 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 			if (!this.equalsDefined && AopUtils.isEqualsMethod(method)) {
 				// The target does not implement the equals(Object) method itself.
 				return equals(args[0]);
-			}
-			else if (!this.hashCodeDefined && AopUtils.isHashCodeMethod(method)) {
+			} else if (!this.hashCodeDefined && AopUtils.isHashCodeMethod(method)) {
 				// The target does not implement the hashCode() method itself.
 				return hashCode();
-			}
-			else if (method.getDeclaringClass() == DecoratingProxy.class) {
+			} else if (method.getDeclaringClass() == DecoratingProxy.class) {
 				// There is only getDecoratedClass() declared -> dispatch to proxy config.
 				return AopProxyUtils.ultimateTargetClass(this.advised);
-			}
-			else if (!this.advised.opaque && method.getDeclaringClass().isInterface() &&
+			} else if (!this.advised.opaque && method.getDeclaringClass().isInterface() &&
 					method.getDeclaringClass().isAssignableFrom(Advised.class)) {
 				// Service invocations on ProxyConfig with the proxy config...
 				return AopUtils.invokeJoinpointUsingReflection(this.advised, method, args);
@@ -214,11 +211,11 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 				// nothing but a reflective operation on the target, and no hot swapping or fancy proxying.
 				Object[] argsToUse = AopProxyUtils.adaptArgumentsIfNecessary(method, args);
 				retVal = AopUtils.invokeJoinpointUsingReflection(target, method, argsToUse);
-			}
-			else {
+			} else {
 				// We need to create a method invocation...
 				invocation = new ReflectiveMethodInvocation(proxy, target, method, args, targetClass, chain);
 				// Proceed to the joinpoint through the interceptor chain.
+				// 链式调用过程
 				retVal = invocation.proceed();
 			}
 
@@ -231,8 +228,7 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 				// is type-compatible. Note that we can't help if the target sets
 				// a reference to itself in another returned object.
 				retVal = proxy;
-			}
-			else if (retVal == null && returnType != Void.TYPE && returnType.isPrimitive()) {
+			} else if (retVal == null && returnType != Void.TYPE && returnType.isPrimitive()) {
 				throw new AopInvocationException(
 						"Null return value from advice does not match primitive return type for: " + method);
 			}

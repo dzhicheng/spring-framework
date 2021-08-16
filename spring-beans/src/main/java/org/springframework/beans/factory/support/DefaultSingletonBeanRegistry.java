@@ -230,6 +230,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 				}
 
 				//把beanName添加到singletonsCurrentlyInCreation Set容器中，在这个集合里面的bean都是正在实例化的bean
+				// 有参构造函数第二次进来会报错
 				beforeSingletonCreation(beanName);
 				boolean newSingleton = false;
 				boolean recordSuppressedExceptions = (this.suppressedExceptions == null);

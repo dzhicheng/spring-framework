@@ -623,9 +623,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 				// Last step: publish corresponding event.
 				finishRefresh();
-			}
-
-			catch (BeansException ex) {
+			} catch (BeansException ex) {
 				if (logger.isWarnEnabled()) {
 					logger.warn("Exception encountered during context initialization - " +
 							"cancelling refresh attempt: " + ex);
@@ -639,9 +637,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 				// Propagate exception to caller.
 				throw ex;
-			}
-
-			finally {
+			} finally {
 				// Reset common introspection caches in Spring's core, since we
 				// might not ever need metadata for singleton beans anymore...
 				resetCommonCaches();

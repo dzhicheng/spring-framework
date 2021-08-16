@@ -174,8 +174,7 @@ public class HandlerExecutionChain {
 				HandlerInterceptor interceptor = interceptors[i];
 				try {
 					interceptor.afterCompletion(request, response, this.handler, ex);
-				}
-				catch (Throwable ex2) {
+				} catch (Throwable ex2) {
 					logger.error("HandlerInterceptor.afterCompletion threw exception", ex2);
 				}
 			}

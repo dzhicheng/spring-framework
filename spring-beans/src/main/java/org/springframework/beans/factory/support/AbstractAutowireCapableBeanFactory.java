@@ -551,7 +551,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			instanceWrapper = this.factoryBeanInstanceCache.remove(beanName);
 		}
 		if (instanceWrapper == null) {
-			//创建实例,,重点看，重要程度：5
+			//创建实例,重点看，重要程度：5
+			// 1.factoryMethod实例化
+			// 2.有参构造函数实例化
+			// 3.无参构造函数实例化
 			instanceWrapper = createBeanInstance(beanName, mbd, args);
 		}
 		final Object bean = instanceWrapper.getWrappedInstance();
@@ -571,8 +574,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 					//对类中注解的装配过程
 					//重要程度5，必须看
 					applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
-				}
-				catch (Throwable ex) {
+				} catch (Throwable ex) {
 					throw new BeanCreationException(mbd.getResourceDescription(), beanName,
 							"Post-processing of merged bean definition failed", ex);
 				}
@@ -598,6 +600,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		Object exposedObject = bean;
 		try {
 			//ioc di，依赖注入的核心方法，该方法必须看，重要程度：5
+			// 依赖注入会触发getBean操作
 			populateBean(beanName, mbd, instanceWrapper);
 
 			// bean 实例化+ioc依赖注入完以后的调用()，非常重要，重要程度：5

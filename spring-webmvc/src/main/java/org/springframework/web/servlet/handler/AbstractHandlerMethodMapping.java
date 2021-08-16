@@ -473,8 +473,8 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
 			if (handlerMethod.equals(PREFLIGHT_AMBIGUOUS_MATCH)) {
 				return AbstractHandlerMethodMapping.ALLOW_CORS_CONFIG;
-			}
-			else {
+			} else {
+				// 注解跨域
 				CorsConfiguration corsConfigFromMethod = this.mappingRegistry.getCorsConfiguration(handlerMethod);
 				corsConfig = (corsConfig != null ? corsConfig.combine(corsConfigFromMethod) : corsConfigFromMethod);
 			}

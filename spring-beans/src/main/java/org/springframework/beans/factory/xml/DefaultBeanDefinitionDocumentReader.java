@@ -312,15 +312,15 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	 * and registering it with the registry.
 	 */
 	protected void processBeanDefinition(Element ele, BeanDefinitionParserDelegate delegate) {
-		//重点看这个方法，重要程度 5 ，解析document，封装成BeanDefinition
+		// 1.重点看这个方法，重要程度 5 ，解析document，封装成BeanDefinition
 		BeanDefinitionHolder bdHolder = delegate.parseBeanDefinitionElement(ele);
 		if (bdHolder != null) {
 
-			//该方法功能不重要，设计模式重点看一下，装饰者设计模式，加上SPI设计思想
+			// 2.该方法功能不重要，设计模式重点看一下，装饰者设计模式，加上SPI设计思想
 			bdHolder = delegate.decorateBeanDefinitionIfRequired(ele, bdHolder);
 			try {
 
-				//完成document到BeanDefinition对象转换后，对BeanDefinition对象进行缓存注册
+				// 3.完成document到BeanDefinition对象转换后，对BeanDefinition对象进行缓存注册
 				// Register the final decorated instance.
 				BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry());
 			} catch (BeanDefinitionStoreException ex) {

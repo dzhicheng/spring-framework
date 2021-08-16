@@ -114,6 +114,7 @@ class ConfigurationClassBeanDefinitionReader {
 	public void loadBeanDefinitions(Set<ConfigurationClass> configurationModel) {
 		TrackedConditionEvaluator trackedConditionEvaluator = new TrackedConditionEvaluator();
 		for (ConfigurationClass configClass : configurationModel) {
+			// configClass收集的类
 			loadBeanDefinitionsForConfigurationClass(configClass, trackedConditionEvaluator);
 		}
 	}
@@ -137,6 +138,7 @@ class ConfigurationClassBeanDefinitionReader {
 		if (configClass.isImported()) {
 			registerBeanDefinitionForImportedConfigurationClass(configClass);
 		}
+		// 获取含有@Bean的方法
 		for (BeanMethod beanMethod : configClass.getBeanMethods()) {
 			loadBeanDefinitionsForBeanMethod(beanMethod);
 		}
@@ -216,8 +218,7 @@ class ConfigurationClassBeanDefinitionReader {
 			// static @Bean method
 			beanDef.setBeanClassName(configClass.getMetadata().getClassName());
 			beanDef.setFactoryMethodName(methodName);
-		}
-		else {
+		} else {
 			// instance @Bean method
 			beanDef.setFactoryBeanName(configClass.getBeanName());
 			beanDef.setUniqueFactoryMethodName(methodName);
