@@ -84,9 +84,23 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * e.g. {@link Configuration @Configuration} classes
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
+		/**
+		 * 1.注册Spring 内置后置处理器的BeanDefinition到容器
+		 * 	1）实例化BeanFactory工厂，生成bean对象
+		 * 	2）实例化BeanDefinitionReader（注解配置读取器），
+		 * 		将特定注解（@Service, @Repository）的类进行读取转化为BeanDefinition对象
+		 * 	3）实例化ClassPathBeanDefinitionScanner 路径扫描器，指定包目录下扫描查找bean对象
+		 */
 		this();
-		// annotatedClasses类BeanDefinition转换，类上的注解放在BeanDefinition
+		/**
+		 * 2.将注册配置类BeanDefinition到容器
+		 * 		解析用户传入的spring配置类，解析成一个BeanDefinition然后注册到容器中
+		 * 	annotatedClasses类BeanDefinition转换，类上的注解放在BeanDefinition
+		 */
 		register(annotatedClasses);
+		/**
+		 * 3.加载或者刷新容器中的bean
+		 */
 		refresh();
 	}
 

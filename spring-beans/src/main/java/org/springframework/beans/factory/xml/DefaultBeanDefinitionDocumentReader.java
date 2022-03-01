@@ -186,8 +186,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 					}
 				}
 			}
-		}
-		else {
+		} else {
 			delegate.parseCustomElement(root);
 		}
 	}

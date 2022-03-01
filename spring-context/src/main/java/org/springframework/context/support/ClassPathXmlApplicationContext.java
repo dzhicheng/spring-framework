@@ -146,6 +146,7 @@ public class ClassPathXmlApplicationContext extends org.springframework.context.
 		//创建解析器，解析configLocations
 		setConfigLocations(configLocations);
 		if (refresh) {
+			// spring容器启动核心方法
 			refresh();
 		}
 	}

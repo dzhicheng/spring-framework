@@ -99,7 +99,7 @@ public class ComponentScanBeanDefinitionParser implements BeanDefinitionParser {
 		ClassPathBeanDefinitionScanner scanner = configureScanner(parserContext, element);
 		//扫描并把扫描的类封装成beanDefinition对象  核心方法，重要程度 5
 		Set<BeanDefinitionHolder> beanDefinitions = scanner.doScan(basePackages);
-		// 完成注解的注册
+		// 完成注解的注册***********重要
 		registerComponents(parserContext.getReaderContext(), beanDefinitions, element);
 
 		return null;
